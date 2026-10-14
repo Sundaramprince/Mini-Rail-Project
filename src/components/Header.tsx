@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Train, Layers, Shield, User as UserIcon, Moon, Sun, Bell, Volume2, Search, Calendar, History, Activity, LogOut, Smartphone } from 'lucide-react';
+import { Train, Layers, Shield, User as UserIcon, Moon, Sun, Bell, Volume2, Search, Calendar, History, Activity, LogOut, Smartphone, Compass } from 'lucide-react';
 import { User, UserRole } from '../types/railway';
 import { playRailwayChime } from '../utils/audio';
 
 interface HeaderProps {
-  activeTab: 'search' | 'pnr' | 'live' | 'bookings' | 'admin';
-  onSelectTab: (tab: 'search' | 'pnr' | 'live' | 'bookings' | 'admin') => void;
+  activeTab: 'search' | 'pnr' | 'live' | 'map' | 'bookings' | 'admin';
+  onSelectTab: (tab: 'search' | 'pnr' | 'live' | 'map' | 'bookings' | 'admin') => void;
   currentUser: User;
   onOpenProfile: () => void;
   onOpenUmlModal: () => void;
@@ -131,7 +131,19 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
           >
             <Activity className="w-4 h-4" />
-            <span>Live Train Status</span>
+            <span>Live Status</span>
+          </button>
+
+          <button
+            onClick={() => onSelectTab('map')}
+            className={`px-3.5 py-2 rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
+              activeTab === 'map'
+                ? 'bg-orange-500 text-white shadow-xs'
+                : 'text-blue-100 hover:text-white hover:bg-white/10'
+            }`}
+          >
+            <Compass className="w-4 h-4 text-cyan-300" />
+            <span>Network Map</span>
           </button>
 
           <button
@@ -248,6 +260,14 @@ export const Header: React.FC<HeaderProps> = ({
           }`}
         >
           Live Tracking
+        </button>
+        <button
+          onClick={() => onSelectTab('map')}
+          className={`px-3 py-1.5 rounded-lg whitespace-nowrap ${
+            activeTab === 'map' ? 'bg-orange-500 text-white' : 'text-blue-200'
+          }`}
+        >
+          Route Map
         </button>
         <button
           onClick={() => onSelectTab('bookings')}

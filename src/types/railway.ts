@@ -30,6 +30,8 @@ export interface Station {
   city: string;
   state: string;
   zone: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface RouteStop {

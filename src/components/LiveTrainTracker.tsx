@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
-import { Train, Navigation, Gauge, Clock, MapPin, CheckCircle2, AlertTriangle, ArrowRight, Radio } from 'lucide-react';
+import { Train, Navigation, Gauge, Clock, MapPin, CheckCircle2, AlertTriangle, ArrowRight, Radio, Compass } from 'lucide-react';
 import { storageService } from '../services/storageService';
+import { Train as TrainType } from '../types/railway';
 
-export const LiveTrainTracker: React.FC = () => {
+interface LiveTrainTrackerProps {
+  onOpenMap?: (train: TrainType) => void;
+}
+
+export const LiveTrainTracker: React.FC<LiveTrainTrackerProps> = ({ onOpenMap }) => {
   const trains = storageService.getTrains();
   const [selectedTrainNumber, setSelectedTrainNumber] = useState(trains[0]?.trainNumber || '22436');
   const [currentStationIndex, setCurrentStationIndex] = useState(1); // Simulated live position
@@ -47,6 +52,16 @@ export const LiveTrainTracker: React.FC = () => {
                 </option>
               ))}
             </select>
+
+            {onOpenMap && (
+              <button
+                onClick={() => onOpenMap(activeTrain)}
+                className="mt-2.5 w-full py-2 px-3 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
+              >
+                <Compass className="w-3.5 h-3.5 text-cyan-200" />
+                <span>View Route on Google Maps</span>
+              </button>
+            )}
           </div>
         </div>
 

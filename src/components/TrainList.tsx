@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Train as TrainIcon, Clock, ArrowRight, Utensils, Info, CheckCircle2, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
+import { Train as TrainIcon, Clock, ArrowRight, Utensils, Info, CheckCircle2, ChevronDown, ChevronUp, MapPin, Compass } from 'lucide-react';
 import { Train, ClassCode, Quota } from '../types/railway';
 
 interface TrainListProps {
@@ -7,6 +7,7 @@ interface TrainListProps {
   journeyDate: string;
   quota: Quota;
   onBookTrain: (train: Train, selectedClass: ClassCode) => void;
+  onOpenMap?: (train: Train) => void;
 }
 
 export const TrainList: React.FC<TrainListProps> = ({
@@ -14,6 +15,7 @@ export const TrainList: React.FC<TrainListProps> = ({
   journeyDate,
   quota,
   onBookTrain,
+  onOpenMap,
 }) => {
   const [selectedClassesByTrain, setSelectedClassesByTrain] = useState<Record<string, ClassCode>>({});
   const [expandedRouteTrainId, setExpandedRouteTrainId] = useState<string | null>(null);
@@ -103,15 +105,27 @@ export const TrainList: React.FC<TrainListProps> = ({
                 </div>
               </div>
 
-              {/* View Schedule Button */}
-              <button
-                type="button"
-                onClick={() => toggleRouteExpand(train.id)}
-                className="text-xs font-semibold text-[#0f2e5a] dark:text-blue-400 hover:underline flex items-center gap-1"
-              >
-                <span>{isRouteExpanded ? 'Hide Route' : 'View Timetable & Stops'}</span>
-                {isRouteExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-              </button>
+              {/* Route & Map Actions */}
+              <div className="flex items-center gap-3">
+                {onOpenMap && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenMap(train)}
+                    className="text-xs font-semibold text-orange-600 dark:text-orange-400 hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    <Compass className="w-3.5 h-3.5" />
+                    <span>View on Google Map</span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => toggleRouteExpand(train.id)}
+                  className="text-xs font-semibold text-[#0f2e5a] dark:text-blue-400 hover:underline flex items-center gap-1 cursor-pointer"
+                >
+                  <span>{isRouteExpanded ? 'Hide Route' : 'View Timetable & Stops'}</span>
+                  {isRouteExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                </button>
+              </div>
             </div>
 
             {/* Timings & Duration Banner */}

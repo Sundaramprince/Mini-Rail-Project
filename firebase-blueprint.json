@@ -1,0 +1,64 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Registered railway passenger or administrator profile",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 20 },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "walletBalance": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "Train": {
+      "title": "Train",
+      "description": "Indian Railways train entity with schedule and seat inventory",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "trainNumber": { "type": "string", "maxLength": 10 },
+        "trainName": { "type": "string", "maxLength": 100 },
+        "type": { "type": "string" },
+        "sourceCode": { "type": "string" },
+        "destinationCode": { "type": "string" },
+        "totalSeats": { "type": "number" },
+        "availableSeats": { "type": "number" }
+      },
+      "required": ["id", "trainNumber", "trainName", "sourceCode", "destinationCode"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Passenger ticket reservation with PNR and seat allocation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "pnr": { "type": "string", "maxLength": 12 },
+        "userId": { "type": "string" },
+        "trainNumber": { "type": "string" },
+        "journeyDate": { "type": "string" },
+        "bookingStatus": { "type": "string" },
+        "totalFare": { "type": "number" }
+      },
+      "required": ["id", "pnr", "userId", "trainNumber", "journeyDate", "bookingStatus"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents keyed by user UID"
+    },
+    "/trains/{trainId}": {
+      "schema": "Train",
+      "description": "Train fleet schedules, routes, and live seat availability"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Railway tickets and reservation records"
+    }
+  }
+}

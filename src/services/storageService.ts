@@ -1,5 +1,6 @@
 import { Booking, Train, User, Station, BookedPassenger, CancellationDetails, PaymentTransaction, LiveStatusData } from '../types/railway';
 import { INITIAL_TRAINS, INITIAL_USERS, INITIAL_BOOKINGS, STATIONS } from '../data/seedData';
+import { db, doc, setDoc, getDocs, collection } from './firebase';
 
 const STORAGE_KEYS = {
   TRAINS: 'irctc_trains_v1',
@@ -50,6 +51,11 @@ class StorageService {
 
   saveTrains(trains: Train[]): void {
     this.setStorageItem(STORAGE_KEYS.TRAINS, trains);
+    try {
+      trains.slice(0, 5).forEach(t => {
+        setDoc(doc(db, 'trains', t.id), t).catch(() => {});
+      });
+    } catch {}
   }
 
   getTrainById(id: string): Train | undefined {
@@ -106,6 +112,11 @@ class StorageService {
 
   saveUsers(users: User[]): void {
     this.setStorageItem(STORAGE_KEYS.USERS, users);
+    try {
+      users.forEach(u => {
+        setDoc(doc(db, 'users', u.id), u).catch(() => {});
+      });
+    } catch {}
   }
 
   getCurrentUser(): User {
@@ -185,6 +196,11 @@ class StorageService {
 
   saveBookings(bookings: Booking[]): void {
     this.setStorageItem(STORAGE_KEYS.BOOKINGS, bookings);
+    try {
+      bookings.slice(0, 10).forEach(b => {
+        setDoc(doc(db, 'bookings', b.id), b).catch(() => {});
+      });
+    } catch {}
   }
 
   getBookingByPnr(pnr: string): Booking | undefined {

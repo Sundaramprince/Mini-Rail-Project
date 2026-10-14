@@ -18,9 +18,10 @@ import { CancellationModal } from './components/CancellationModal';
 import { UserProfileModal } from './components/UserProfileModal';
 import { UmlDiagramsModal } from './components/UmlDiagramsModal';
 import { ApkDeployModal } from './components/ApkDeployModal';
+import { RailwayGoogleMap } from './components/RailwayGoogleMap';
 import { storageService } from './services/storageService';
 import { Train, ClassCode, Quota, Booking, User, CancellationDetails } from './types/railway';
-import { Layers, Smartphone, MapPin, Mail, Phone, Linkedin, Instagram, Facebook, Twitter, Github, MessageCircle, Sparkles, Send, Bot } from 'lucide-react';
+import { Layers, Smartphone, MapPin, Mail, Phone, Linkedin, Instagram, Facebook, Twitter, Github, MessageCircle, Sparkles, Send, Bot, Compass } from 'lucide-react';
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState<User>(storageService.getCurrentUser());
@@ -29,7 +30,7 @@ export default function App() {
     return sessionStorage.getItem('irctc_auth_session') === 'true';
   });
 
-  const [activeTab, setActiveTab] = useState<'search' | 'pnr' | 'live' | 'bookings' | 'admin'>('search');
+  const [activeTab, setActiveTab] = useState<'search' | 'pnr' | 'live' | 'map' | 'bookings' | 'admin'>('search');
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     return localStorage.getItem('irctc_dark_mode') === 'true';
   });
@@ -218,6 +219,7 @@ export default function App() {
               journeyDate={currentJourneyDate}
               quota={currentQuota}
               onBookTrain={handleOpenBooking}
+              onOpenMap={() => setActiveTab('map')}
             />
           </div>
         )}
@@ -234,7 +236,22 @@ export default function App() {
         )}
 
         {/* Tab 3: Live Train Running Status (NTES) */}
-        {activeTab === 'live' && <LiveTrainTracker />}
+        {activeTab === 'live' && (
+          <LiveTrainTracker onOpenMap={() => setActiveTab('map')} />
+        )}
+
+        {/* Tab 4: Google Maps Indian Railways Network & Route Visualizer */}
+        {activeTab === 'map' && (
+          <RailwayGoogleMap
+            selectedTrain={filteredTrains[0] || allTrains[0]}
+            onSelectStation={(stationCode) => {
+              setActiveTab('search');
+            }}
+            onBookTrain={(train) => {
+              handleOpenBooking(train, '3A');
+            }}
+          />
+        )}
 
         {/* Tab 4: My Bookings History */}
         {activeTab === 'bookings' && (
@@ -280,10 +297,10 @@ export default function App() {
 
                 <div>
                   <div className="text-xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-cyan-300 to-purple-400 leading-none">
-                    SUNDARAM
+                    SUNDARAM PRINCE
                   </div>
-                  <div className="text-[10px] font-mono tracking-[0.35em] text-cyan-400 font-bold mt-1">
-                    TECH
+                  <div className="text-[10px] font-mono tracking-[0.28em] text-cyan-400 font-bold mt-1">
+                    TECH &amp; RAIL SOLUTIONS
                   </div>
                 </div>
               </div>
@@ -331,7 +348,7 @@ export default function App() {
                   <Twitter className="w-4 h-4" />
                 </a>
                 <a
-                  href="https://github.com/Sundaram"
+                  href="https://github.com/Sundaramprince"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2.5 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition shadow-xs"
@@ -423,8 +440,8 @@ export default function App() {
               {/* Email */}
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
-                <a href="mailto:contact@sundaramtech.com" className="text-slate-300 hover:text-white transition">
-                  contact@sundaramtech.com
+                <a href="mailto:sundaramprincekumar@gmail.com" className="text-slate-300 hover:text-white transition">
+                  sundaramprincekumar@gmail.com
                 </a>
               </div>
 
@@ -452,7 +469,7 @@ export default function App() {
           {/* Bottom Bar: Copyright & Actions */}
           <div className="pt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500">
             <div>
-              &copy; 2026 Sundaram Tech Solutions. All rights reserved.
+              &copy; 2026 Sundaram Prince. All rights reserved.
             </div>
 
             <div className="flex flex-wrap items-center gap-3">
@@ -461,14 +478,19 @@ export default function App() {
                 <span>🔥 Check our latest work</span>
               </div>
 
-              {/* Ask Sundaram AI button */}
+              {/* Ask Sundaram Prince AI button */}
               <button
                 type="button"
-                onClick={() => alert('Sundaram AI Assistant is ready to help you with software architecture, cloud platforms, and full-stack solutions!')}
+                onClick={() => {
+                  const query = prompt('Ask Sundaram Prince AI: Enter your railway reservation, PNR, or system query:');
+                  if (query) {
+                    alert(`Sundaram Prince AI: Processing "${query}". Your request is handled by the Indian Railways PRS intelligent agent!`);
+                  }
+                }}
                 className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 text-white font-bold text-xs shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:scale-105 transition flex items-center gap-1.5 cursor-pointer"
               >
                 <Bot className="w-4 h-4 text-cyan-200" />
-                <span>Ask Sundaram AI</span>
+                <span>Ask Sundaram Prince AI</span>
               </button>
 
               {/* Railway Controls Navigation */}
