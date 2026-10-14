@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2e5a" />
+      <stop offset="100%" stop-color="#1e40af" />
+    </linearGradient>
+    <linearGradient id="train" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ea580c" />
+      <stop offset="100%" stop-color="#c2410c" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="110" fill="url(#bg)" />
+  <g transform="translate(106, 96)">
+    <!-- Locomotive Body -->
+    <rect x="20" y="20" width="260" height="230" rx="36" fill="#ffffff" />
+    <rect x="20" y="160" width="260" height="90" rx="20" fill="url(#train)" />
+    <!-- Windshield -->
+    <rect x="45" y="45" width="210" height="95" rx="18" fill="#0f2e5a" />
+    <path d="M 50 120 L 120 55 L 140 55 L 70 120 Z" fill="#ffffff" opacity="0.25" />
+    <!-- Headlights -->
+    <circle cx="70" cy="205" r="20" fill="#fef08a" />
+    <circle cx="230" cy="205" r="20" fill="#fef08a" />
+    <!-- Center Emblem / Grille -->
+    <rect x="120" y="185" width="60" height="12" rx="6" fill="#ffffff" />
+    <rect x="130" y="205" width="40" height="8" rx="4" fill="#ffffff" />
+    <!-- Rails & Wheels -->
+    <rect x="40" y="265" width="220" height="16" rx="8" fill="#94a3b8" />
+    <rect x="10" y="295" width="280" height="20" rx="10" fill="#ea580c" />
+    <line x1="70" y1="281" x2="60" y2="315" stroke="#ffffff" stroke-width="8" stroke-linecap="round" />
+    <line x1="230" y1="281" x2="240" y2="315" stroke="#ffffff" stroke-width="8" stroke-linecap="round" />
+  </g>
+</svg>

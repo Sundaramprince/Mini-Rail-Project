@@ -1,0 +1,6 @@
+{
+  "name": "Mini Rail IRCTC Clone",
+  "description": "Comprehensive Indian Railways ticket booking system with train search, seat availability, live PNR status, coach berth selection, e-ticket generation, cancellation refund calculator, admin dashboard, and system UML diagrams.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "Mini Rail IRCTC - Indian Railways",
+  "short_name": "Mini Rail",
+  "description": "Indian Railways next-gen ticket booking, PNR enquiry, live train running status, and coach seat selection.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f2e5a",
+  "theme_color": "#0f2e5a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
